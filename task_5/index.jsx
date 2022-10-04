@@ -1,48 +1,32 @@
-import { useState } from "react";
+// ФАЙЛ С КОРНЕВЫМ КОМПОНЕНТОМ ДЛЯ РЕДАКТИРОВАНИЯ ПОДКЛЮЧАЕМЫХ ТЕСТОВЫХ КОМПОНЕНТОВ
 
-export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
-  const [isActive, setActive] = useState(false);
+import React, { Fragment, StrictMode } from "react";
+import ReactDOM from "react-dom";
 
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
+import { Block } from "./taskComponents";
+import { blocksData } from "./data";
 
-  return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <img src={imgSrc} alt={imgAlt} />
-    </div>
-  );
-};
+function App() {
+    return (
+        <Fragment>
+            {blocksData.map((data) => (
+                <Block
+                    key={data.id}
+                    imgSrc={data.imgSrc}
+                    imgAlt={data.imgAlt}
+                    content={data.content}
+                    userData={data.userData}
+                    showContent={data.showContent}
+                    mouseEnterCallback={data.mouseEnterCallback}
+                />
+            ))}
+        </Fragment>
+    );
+}
 
-export const Block2 = ({ mouseEnterCallbak, content }) => {
-  const [isActive, setActive] = useState(false);
-
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
-
-  return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <p>{content}</p>
-    </div>
-  );
-};
-
-export const Block3 = ({ mouseEnterCallbak, userData }) => {
-  const [isActive, setActive] = useState(false);
-
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
-
-  return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <address>
-        country: {userData.country}, street: {userData.street}
-      </address>
-    </div>
-  );
-};
+ReactDOM.render(
+    <StrictMode>
+        <App />
+    </StrictMode>,
+    document.getElementById("root")
+);
